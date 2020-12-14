@@ -66,12 +66,15 @@ class Header extends Component {
             <p className="quantity">{product.quantity}</p>
             <p className="amount">{product.price * product.quantity}</p>
           </div>
-          <a
+          <button
             className="product-remove"
-            onClick={() => this.props.removeItem(product.id)}
+            onClick={() => {
+              console.log('product', product)
+              this.props.removeProduct(product.id)}
+            }
           >
             x
-          </a>
+          </button>
         </li>
       );
     });

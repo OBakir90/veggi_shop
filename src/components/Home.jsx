@@ -17,6 +17,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.handleSearch = this.handleSearch.bind(this);
+    this.addToCart=this.addToCart.bind(this);
+    this.removeProduct=this.removeProduct.bind(this);
   }
   getProducts() {
     axios
@@ -58,10 +60,11 @@ class Home extends Component {
 
   removeProduct(id) {
     let cartProductItems = this.state.cartProducts;
-    let filteredProducts = cartProductItems.filter(
-      (item) => item.products.id !== id
-    );
-    console.log(filteredProducts);
+    let filteredProducts = cartProductItems.filter((item) =>item.id !== id);
+    this.setState({
+      ...this.state,
+      cartProducts: filteredProducts
+    })
   }
 
   checkProduct(productId) {
@@ -89,17 +92,7 @@ class Home extends Component {
           .includes(this.state.searchKeyword.toLowerCase()) ||
         !this.state.searchKeyword
     );
-    //MOVED INTO PRODUCTS COMPONENT
-    // .map((product) => {
-    //   return (
-    //     <Product
-    //       key={product.id}
-    //       name={product.name}
-    //       price={product.price}
-    //       image={product.image}
-    //     ></Product>
-    //   );
-    // });
+
 
     return (
       <>
@@ -108,7 +101,7 @@ class Home extends Component {
           cartProducts={this.state.cartProducts}
           productCount={this.state.itemCount}
           totalPrice={this.state.totalPrice}
-          removeItem={this.removeProduct}
+          removeProduct={this.removeProduct}
         ></Header>
         <Products
           productList={productList}
